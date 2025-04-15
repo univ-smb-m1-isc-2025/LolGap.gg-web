@@ -1,75 +1,88 @@
-<script setup>
-import RankBadge from './RankBadge.vue';
-import GameStats from '../common/GameStats.vue';
-import QueueName from './QueueName.vue';
-import MiniMatchHistory from '../mini/MiniMatchHistory.vue';
-import queueService from '@/services/queueService';
-
-defineProps({
-  rank: {
-    type: Object,
-    required: true,
-    validator: (value) => {
-      return (
-        'tier' in value &&
-        'rank' in value &&
-        'leaguePoints' in value &&
-        'wins' in value &&
-        'losses' in value &&
-        'queueType' in value
-      );
-    }
-  }
-});
-
-const getRankImage = (tier) => {
-  return new URL(`../../assets/rank/${tier.toLowerCase()}.png`, import.meta.url).href;
-};
-</script>
-
 <template>
-  <div class="card bg-dark border-secondary mb-3">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <div class="d-flex align-items-center gap-3">
-          <img 
-            :src="getRankImage(rank.tier)" 
-            :alt="rank.tier"
-            class="rank-icon"
-          >
-          <div>
-            <div class="text-white h6 mb-0">{{ rank.tier }} {{ rank.rank }}</div>
-            <small class="text-white-50">{{ rank.leaguePoints }} LP</small>
-          </div>
+    <div class="rank-card">
+        <div class="rank-main">
+            <RankLogo :rank="rank" />
+            <div class="queue-name">{{ getQueueName(rank.queueType) }}</div>
         </div>
-        <MiniMatchRecap :queueType="rank.queueType" :limit="5" />
-      </div>
-
-      <div class="stats text-white">
-        <span class="badge bg-secondary me-2">
-          {{ queueService.getDisplayName(rank.queueType) }}
-        </span>
-        <span class="text-success fw-bold">{{ rank.wins }}W</span>
-        <span class="mx-2 text-white-50">/</span>
-        <span class="text-danger fw-bold">{{ rank.losses }}L</span>
-      </div>
+        <div class="rank-details">
+            <div class="tier-info">
+                {{ rank.tier }} {{ rank.rank }} - {{ rank.leaguePoints }} LP
+            </div>
+            <div class="win-loss">
+                <span class="wins">{{ rank.wins }}W</span>
+                <span class="losses">{{ rank.losses }}L</span>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
+<script setup lang="ts">
+import type { LeagueEntryDTO } from '../../types/rank'
+import RankLogo from './RankLogo.vue'
+
+const props = defineProps<{
+    rank: LeagueEntryDTO
+}>()
+
+const getQueueName = (queueType: string): string => {
+    switch (queueType) {
+        case 'RANKED_SOLO_5x5':
+            return 'Solo/Duo'
+        case 'RANKED_FLEX_SR':
+            return 'Flex 5v5'
+        case 'RANKED_FLEX_TT':
+            return 'Flex 3v3'
+        default:
+            return queueType
+    }
+}
+</script>
+
 <style scoped>
-.rank-icon {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
+.rank-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: var(--color-background-soft);
+    border-radius: 8px;
 }
 
-/* Force les couleurs du texte */
-.text-white {
-  color: #ffffff !important;
+.rank-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.text-white-50 {
-  color: rgba(255, 255, 255, 0.5) !important;
+.queue-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.rank-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tier-info {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.win-loss {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.wins {
+    color: var(--success-color);
+}
+
+.losses {
+    color: var(--error-color);
 }
 </style> 
