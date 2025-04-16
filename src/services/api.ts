@@ -2,7 +2,7 @@ import axios from 'axios'
 import type { LoginCredentials, LoginResponse } from '../types/account'
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080',
+    baseURL: import.meta.env.VITE_API_BASE_URL || 'https://api.lolgap.gg.oups.net',
     headers: {
         'Content-Type': 'application/json'
     }
