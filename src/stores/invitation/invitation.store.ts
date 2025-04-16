@@ -14,7 +14,7 @@ export const useInvitationStore = defineStore('invitation', () => {
         isLoading.value = true
         error.value = null
         try {
-            invitations.value = await invitationService.getMyInvitations()
+            invitations.value = await invitationService.getUserInvitations()
         } catch (err) {
             error.value = 'Erreur lors du chargement des invitations'
             console.error(err)
