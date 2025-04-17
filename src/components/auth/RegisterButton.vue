@@ -57,8 +57,8 @@ const handleRegister = async () => {
         })
         toast.success('Account created successfully!')
         router.push('/login')
-    } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Failed to create account'
+    } catch (err: unknown) {
+        const errorMessage = err instanceof Error ? err.message : 'Failed to create account'
         toast.error(errorMessage)
         error.value = errorMessage
     }
