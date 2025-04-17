@@ -28,8 +28,8 @@ api.interceptors.response.use(
     async (error) => {
         if (error.response?.status === 401) {
             localStorage.removeItem('token')
-            if (window.location.pathname !== '/auth') {
-                window.location.href = '/auth'
+            if (window.location.pathname !== '/login') {
+                window.location.href = '/login'
             }
         }
         return Promise.reject(error)

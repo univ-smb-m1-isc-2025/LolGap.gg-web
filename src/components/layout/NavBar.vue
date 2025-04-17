@@ -57,7 +57,7 @@ const isAuthenticated = computed(() => authStore.isAuthenticated)
 
 const handleLogout = () => {
     authStore.logout()
-    router.push('/auth')
+    router.push('/login')
 }
 </script>
 
