@@ -1,0 +1,13 @@
+lolgap_web:
+    image: ghcr.io/univ-smb-m1-isc-2025/lolgap.gg-web:main
+    container_name: lolgapgg_web
+    restart: always
+    # depends_on:
+    environment:
+      - VIRTUAL_HOST=www.logap.gg.oups.net
+      - VIRTUAL_PORT=80
+      - LETSENCRYPT_HOST=www.lolgap.gg.oups.net
+      # - LETSENCRYPT_TEST=true
+
+    volumes:
+      - ./logs:/logs

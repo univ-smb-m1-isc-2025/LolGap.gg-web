@@ -1,8 +1,8 @@
 <template>
-    <div class="login-view">
-        <div class="login-card">
-            <h2 class="login-title">Sign in</h2>
-            <div class="login-form">
+    <div class="register-view">
+        <div class="register-card">
+            <h2 class="register-title">Create Account</h2>
+            <div class="register-form">
                 <TextInput
                     id="username"
                     v-model="username"
@@ -18,10 +18,29 @@
                     placeholder="Enter your password"
                     required
                 />
-                <LoginButton :username="username" :password="password" />
+                <TextInput
+                    id="riotGameName"
+                    v-model="riotGameName"
+                    label="Riot Game Name"
+                    placeholder="Enter your Riot game name"
+                    required
+                />
+                <TextInput
+                    id="riotTagLine"
+                    v-model="riotTagLine"
+                    label="Riot Tag Line"
+                    placeholder="Enter your Riot tag line (e.g., EUW)"
+                    required
+                />
+                <RegisterButton 
+                    :username="username"
+                    :password="password"
+                    :riotGameName="riotGameName"
+                    :riotTagLine="riotTagLine"
+                />
                 <div class="switch-form">
-                    <p>Don't have an account?</p>
-                    <button @click="switchToRegister" class="switch-button">Create account</button>
+                    <p>Already have an account?</p>
+                    <button @click="switchToLogin" class="switch-button">Sign in</button>
                 </div>
             </div>
         </div>
@@ -30,28 +49,30 @@
 
 <script setup lang="ts">
 import TextInput from './TextInput.vue'
-import LoginButton from '../auth/LoginButton.vue'
+import RegisterButton from '../auth/RegisterButton.vue'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const username = ref('')
 const password = ref('')
+const riotGameName = ref('')
+const riotTagLine = ref('')
 
-const switchToRegister = () => {
-    router.push('/register')
+const switchToLogin = () => {
+    router.push('/login')
 }
 </script>
 
 <style scoped>
-.login-view {
+.register-view {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.login-card {
+.register-card {
     max-width: 28rem;
     width: 100%;
     padding: 2rem;
@@ -60,7 +81,7 @@ const switchToRegister = () => {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-.login-title {
+.register-title {
     margin-top: 1.2rem;
     text-align: center;
     font-size: 1.675rem;
@@ -68,7 +89,7 @@ const switchToRegister = () => {
     color: #111827;
 }
 
-.login-form {
+.register-form {
     margin-top: 2rem;
     display: flex;
     flex-direction: column;

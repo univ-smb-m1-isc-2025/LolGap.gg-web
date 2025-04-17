@@ -35,7 +35,7 @@
                         <span>{{ authStore.account?.riotGameName }}#{{ authStore.account?.riotTagLine }}</span>
                         <UserProfilPic />
                     </div>
-                    <router-link v-if="!isAuthenticated" to="/auth" class="nav-link">Login</router-link>
+                    <router-link v-if="!isAuthenticated" to="/login" class="nav-link">Login</router-link>
                     <LogoutButton v-else />
                 </div>
             </div>

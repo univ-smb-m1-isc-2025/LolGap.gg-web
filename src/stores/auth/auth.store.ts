@@ -34,6 +34,16 @@ export const useAuthStore = defineStore('auth', {
             }
         },
 
+        async register(account: { username: string; password: string; riotGameName: string; riotTagLine: string }) {
+            try {
+                const response = await authService.register(account)
+                return { success: true, user: response }
+            } catch (error) {
+                console.error('Registration failed:', error)
+                return { success: false, error }
+            }
+        },
+
         logout() {
             this.token = null
             this.account = null

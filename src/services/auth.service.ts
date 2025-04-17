@@ -1,12 +1,16 @@
 import api from './api'
-import type { LoginCredentials, LoginResponse, Account } from '../types/account'
-import type { LeagueAccount } from '../types/account'
+import type { LoginCredentials, LoginResponse, Account, LeagueAccount } from '../types/account'
 
-export class AuthService {
+export const authService = {
     async login(credentials: LoginCredentials): Promise<LoginResponse> {
         const response = await api.post<LoginResponse>('/login', credentials)
         return response.data
-    }
+    },
+
+    async register(account: { username: string; password: string; riotGameName: string; riotTagLine: string }) {
+        const response = await api.post('/register', account)
+        return response.data
+    },
 
     async getMe(token: string): Promise<Account> {
         const response = await api.get<Account>('/me', {
@@ -15,7 +19,7 @@ export class AuthService {
             }
         })
         return response.data
-    }
+    },
 
     async getLeagueAccount(token: string): Promise<LeagueAccount> {
         const response = await api.get<LeagueAccount>('/api/league/me', {
@@ -25,6 +29,4 @@ export class AuthService {
         })
         return response.data
     }
-}
-
-export const authService = new AuthService() 
+} 

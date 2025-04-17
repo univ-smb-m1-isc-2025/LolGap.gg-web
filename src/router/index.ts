@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { setupRouterGuards } from './guards'
 import HomeView from '../views/home/HomeView.vue'
 import LoginView from '../views/auth/LoginView.vue'
+import RegisterView from '../views/auth/RegisterView.vue'
 import GroupsView from '../views/groups/GroupsView.vue'
 import NotificationsView from '../views/notifications/NotificationsView.vue'
 import { useAuthStore } from '../stores/auth/auth.store'
@@ -16,9 +17,15 @@ const router = createRouter({
             meta: { requiresAuth: true }
         },
         {
-            path: '/auth',
-            name: 'auth',
+            path: '/login',
+            name: 'login',
             component: LoginView,
+            meta: { requiresAuth: false }
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: RegisterView,
             meta: { requiresAuth: false }
         },
         {

@@ -9,7 +9,7 @@ export function setupRouterGuards(router: Router) {
         console.log(isAuthenticated)
 
         if (to.meta.requiresAuth && !isAuthenticated) {
-            next('/auth')
+            next('/login')
         } else {
             next()
         }
